@@ -14,11 +14,10 @@ This extension makes it easy to create and update Rust modules and submodules.
 ## Features
 
 ### Simple context-menu shortcut to create a new module or submodule
-![context-image](images/context-menu.gif)
+![context-module-image](images/module.gif)
 
+![context-submodule-image](images/submodule.gif)
 
-### Use the command menu to create a new module or submodule even faster
-![command-image](images/command-menu.gif)
 
 > Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
 
@@ -34,9 +33,13 @@ This extension contributes the following settings:
 
 ## Known Issues
 
-- None
+- Cannot create new module from command because of issue with selected path
 
 ## Release Notes
+
+### 0.0.2
+
+Added example images to README.md
 
 ### 0.0.1
 

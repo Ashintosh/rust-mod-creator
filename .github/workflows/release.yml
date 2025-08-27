@@ -42,6 +42,11 @@ jobs:
           name: rust-mod-creator-${{ github.event.release.tag_name }}.vsix
           path: rust-mod-creator-${{ github.event.release.tag_name }}.vsix
 
+      - name: Publish extension
+        run: vsce publish --packagePath rust-mod-creator-${{ github.event.release.tag_name }}.vsix
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_TOKEN }}
+
   release:
     name: Release package
     runs-on: ubuntu-latest
