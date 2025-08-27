@@ -1,0 +1,61 @@
+name: Package & Release
+
+on:
+  release:
+    types: [ published ]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Package extension source
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install vsce
+        run: npm install -g @vscode/vsce
+
+      - name: Package extension 
+        run: vsce package --out rust-mod-creator-${{ github.event.release.tag_name }}.vsix
+
+      - name: Upload packaged extension
+        uses: actions/upload-artifact@v4
+        with:
+          name: rust-mod-creator-${{ github.event.release.tag_name }}.vsix
+          path: rust-mod-creator-${{ github.event.release.tag_name }}.vsix
+
+  release:
+    name: Release package
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download extension artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: rust-mod-creator-${{ github.event.release.tag_name }}.vsix
+          path: ./artifacts/
+
+      - name: Publish release assets
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release upload ${{ github.event.release.tag_name }} ./artifacts/rust-mod-creator-${{ github.event.release.tag_name }}.vsix --clobber
