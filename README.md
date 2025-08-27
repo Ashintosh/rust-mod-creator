@@ -1,71 +1,43 @@
-# rust-mod-creator README
+# rust-mod-creator
 
-This is the README for your extension "rust-mod-creator". After writing up a brief description, we recommend including the following sections.
+This extension makes it easy to create and update Rust modules and submodules.
+
+1. In the file explorer, right-click in the directory you want to create your new module or submodule.
+2. Click "Create New (Sub)module".
+3. Enter the name of your new (sub)module.
+   - Adding a trailing `.` or `.rs` will create a new submodule file.
+   - Adding a trailing `/` or no trailing symbol will create a new module directory with a new inner `mod.rs` file.
+4. Select the access modifier for your new (sub)module.
+5. New (sub)module is now created and added to the top of existing `mod.rs`.
+    - If there is no existing `mod.rs` file, it will try to add mod line to `lib.rs` then will try `main.rs`.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+### Simple context-menu shortcut to create a new module or submodule
+![context-image](images/context-menu.gif)
 
-For example if there is an image subfolder under your extension project workspace:
 
-\!\[feature X\]\(images/feature-x.png\)
+### Use the command menu to create a new module or submodule even faster
+![command-image](images/command-menu.gif)
 
 > Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+- None
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
 This extension contributes the following settings:
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+* `rustModCreator.autoFocus`: Automatically focus the newly created module file in the editor.
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+- None
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+### 0.0.1
 
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+Initial release of Rust Mod Creator
