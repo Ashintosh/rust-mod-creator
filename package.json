@@ -1,5 +1,6 @@
 {
   "name": "rust-mod-creator",
+  "type": "module",
   "displayName": "rust-mod-creator",
   "description": "Simplify creating new Rust modules",
   "version": "0.0.1",
@@ -15,7 +16,7 @@
     "commands": [
       {
         "command": "rust-mod-creator.createModuleOrSubmodule",
-        "title": "New Rust (sub)module"
+        "title": "New Rust (Sub)module"
       }
     ],
     "menus": {
@@ -26,6 +27,16 @@
           "group": "navigation"
         }
       ]
+    },
+    "configuration": {
+      "title": "Rust Mod Creator",
+      "properties": {
+        "rustModeCreator.autoFocus": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically focus the newly created module file in the editor."
+        }
+      }
     }
   },
   "scripts": {
