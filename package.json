@@ -1,15 +1,21 @@
 {
   "name": "rust-mod-creator",
-  "type": "module",
+  "publisher": "AshSmith",
   "displayName": "rust-mod-creator",
-  "description": "Simplify creating new Rust modules",
+  "description": "Easily create Rust modules and submodules in VS Code",
   "version": "0.0.1",
+  "type": "module",
   "engines": {
     "vscode": "^1.103.0"
   },
   "categories": [
-    "Other"
+    "Programming Languages"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ashintosh/rust-mod-creator"
+  },
+  "icon": "images/icon.png",
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
