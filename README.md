@@ -40,6 +40,9 @@ This extension contributes the following settings:
 
 ## Release Notes
 
+### 0.0.4
+- Fixes typo in `package.json` for visibility options.
+
 ### 0.0.3
 
 - Adds config option to disable message on successful module creation.
