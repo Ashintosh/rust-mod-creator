@@ -24,7 +24,7 @@ This extension makes it easy to create and update Rust modules and submodules.
 
 ## Requirements
 
-- VSCode ^1.50.0
+- VSCode ^1.103.0
 
 ## Extension Settings
 
@@ -32,6 +32,7 @@ This extension contributes the following settings:
 
 * `rustModCreator.autoFocus`: Automatically focus the newly created module file in the editor.
 * `rustModCreator.showSuccessMessage`: Shows message that a new module was created.
+* `rustModCreator.visibilityOptions`: Choose what visibility options show when creating a module.
 
 ## Known Issues
 

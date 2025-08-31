@@ -52,7 +52,7 @@
         },
         "rustModCreator.visibilityOptions": {
           "type": "array",
-          "description": "Chose what visibility options show when creating a module.",
+          "description": "Choose what visibility options show when creating a module.",
           "items": {
             "type": "object",
             "properties": {
