@@ -12,7 +12,7 @@ import * as vscode from 'vscode';
  *      - No suffix (e.g., "my_module") -> directory with mod.rs
  *      - "/" (e.g., "my_module/") -> explicitly create directory
  *      - "." (e.g., "my_module.") -> explicitly create a submodule file
- *      - ".rs" (e.g., "my_module.") -> explicitly create a submodule file
+ *      - ".rs" (e.g., "my_module.rs") -> explicitly create a submodule file
  * 
  * @param name - The module name entered by the user.
  * @returns true if the name is valid, false otherwise.

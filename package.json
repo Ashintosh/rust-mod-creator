@@ -4,7 +4,7 @@
   "author": "Ashintosh",
   "displayName": "Rust Mod Creator",
   "description": "Easily create Rust modules and submodules in VS Code",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "type": "module",
   "engines": {
     "vscode": "^1.103.0"
