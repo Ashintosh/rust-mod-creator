@@ -36,32 +36,12 @@ jobs:
       - name: Package extension 
         run: vsce package --out rust-mod-creator-${{ github.event.release.tag_name }}.vsix
 
-      - name: Upload packaged extension
-        uses: actions/upload-artifact@v4
-        with:
-          name: rust-mod-creator-${{ github.event.release.tag_name }}.vsix
-          path: rust-mod-creator-${{ github.event.release.tag_name }}.vsix
-
       - name: Publish extension
-        run: vsce publish --packagePath rust-mod-creator-${{ github.event.release.tag_name }}.vsix
         env:
           VSCE_PAT: ${{ secrets.VSCE_TOKEN }}
+        run: vsce publish --packagePath rust-mod-creator-${{ github.event.release.tag_name }}.vsix
 
-  release:
-    name: Release package
-    runs-on: ubuntu-latest
-    needs: package
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Download extension artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: rust-mod-creator-${{ github.event.release.tag_name }}.vsix
-          path: ./artifacts/
-
-      - name: Publish release assets
+      - name: Publish GitHub release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release upload ${{ github.event.release.tag_name }} ./artifacts/rust-mod-creator-${{ github.event.release.tag_name }}.vsix --clobber
+        run: gh release upload ${{ github.event.release.tag_name }} rust-mod-creator-${{ github.event.release.tag_name }}.vsix --clobber

@@ -4,18 +4,36 @@ import * as path from 'path';
 import * as module from './modules.js';
 import * as utils from './utils.js';
 
+const config = vscode.workspace.getConfiguration('rustModCreator');
+
 /**
  * Activates the Rust Mod Creator extension.
  * Registers the command for creating new Rust modules/submodules.
  */
 export function activate(context: vscode.ExtensionContext) {
+    // Used to prevent context menu from showing in non-Rust workspaces
+    vscode.commands.executeCommand('setContext', 'rust-mod-creator.thisContext', true);
+
     /**
      * Command: rust-mod-creator.createModuleOrSubmodule
      * Allows the user to create a new Rust module or submodule in the selected directory.
      */
     const createModuleOrSubmodule = vscode.commands.registerCommand(
         'rust-mod-creator.createModuleOrSubmodule',
-        async (uri: vscode.Uri) => {
+        async (uri?: vscode.Uri) => {
+            // Set Uri to active file when running as command
+            if (!uri) {
+                const activeEditor = vscode.window.activeTextEditor;
+                if (activeEditor) {
+                    uri = activeEditor.document.uri;
+                } else if (vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders.length > 0) {
+                    uri = vscode.workspace.workspaceFolders[0].uri;
+                } else {
+                    vscode.window.showErrorMessage('No active file or workspace folder found');
+                    return;
+                }
+            }
+
             // ------------------------------------------
             // 1. Determine the selected directory
             // ------------------------------------------
@@ -27,7 +45,7 @@ export function activate(context: vscode.ExtensionContext) {
             // 2. Prompt user for new module name
             // ------------------------------------------
             const rawModuleName = await vscode.window.showInputBox({
-                prompt: 'Enter (sub)module name',
+                prompt: 'Enter module name',
                 placeHolder: 'my_module(.rs)',
                 validateInput(value) {
                     if (!utils.isValidRustName(value)) {
@@ -44,15 +62,11 @@ export function activate(context: vscode.ExtensionContext) {
             // ------------------------------------------
             // 3. Prompt user for visibility level
             // ------------------------------------------
+            const visibilityOptions = config.get<{ label: string; description: string }[]>("visibilityOptions", []);
             const visibility = await vscode.window.showQuickPick(
-                [
-                    { label: 'pub', description: 'Visible to the entire crate' },
-                    { label: 'pub(super)', description: 'Visible to the parent module' },
-                    { label: 'pub(crate)', description: 'Visible only within the crate' },
-                    { label: 'private', description: 'Visible only within this module' },
-                ],
+                visibilityOptions,
                 {
-                    placeHolder: 'Select visibility for this (sub)module',
+                    placeHolder: "Select visibility for this module",
                 }
             );
 
@@ -66,7 +80,7 @@ export function activate(context: vscode.ExtensionContext) {
             const newModuleName = await module.createNew(selectedDirectory, rawModuleName);
 
             if (!newModuleName) {
-                vscode.window.showErrorMessage(`${newModuleName} (sub)module already exists`);
+                vscode.window.showErrorMessage(`${newModuleName} module already exists`);
                 return;
             }
 
@@ -83,10 +97,13 @@ export function activate(context: vscode.ExtensionContext) {
                 return;
             }
 
-            // ------------------------------------------
-            // 6. Notify the user
-            // ------------------------------------------
-            vscode.window.showInformationMessage(`Created ${newModuleName} (sub)module`);
+            //
+
+            const showSuccessMessage = config.get<boolean>('showSuccessMessage');
+            
+            if (showSuccessMessage) {
+                vscode.window.showInformationMessage(`Created ${newModuleName} module`);
+            }
         }
     );
 

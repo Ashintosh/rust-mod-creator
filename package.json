@@ -1,12 +1,13 @@
 {
   "name": "rust-mod-creator",
   "publisher": "AshSmith",
-  "displayName": "rust-mod-creator",
+  "author": "Ashintosh",
+  "displayName": "Rust Mod Creator",
   "description": "Easily create Rust modules and submodules in VS Code",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "type": "module",
   "engines": {
-    "vscode": "^1.103.0"
+    "vscode": "^1.50.0"
   },
   "categories": [
     "Programming Languages"
@@ -16,20 +17,22 @@
     "url": "https://github.com/Ashintosh/rust-mod-creator"
   },
   "icon": "images/icon.png",
-  "activationEvents": [],
+  "activationEvents": [
+    "workspaceContains:**/Cargo.toml"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "rust-mod-creator.createModuleOrSubmodule",
-        "title": "New Rust (Sub)module"
+        "title": "New Rust Module"
       }
     ],
     "menus": {
       "explorer/context": [
         {
           "command": "rust-mod-creator.createModuleOrSubmodule",
-          "when": "resourceLangId == rust || explorerResourceIsFolder",
+          "when": "resourceLangId == rust || rust-mod-creator.thisContext",
           "group": "navigation"
         }
       ]
@@ -37,10 +40,39 @@
     "configuration": {
       "title": "Rust Mod Creator",
       "properties": {
-        "rustModeCreator.autoFocus": {
+        "rustModCreator.autoFocus": {
           "type": "boolean",
           "default": true,
           "description": "Automatically focus the newly created module file in the editor."
+        },
+        "rustModCreator.showSuccessMessage": {
+          "type": "boolean",
+          "default": true,
+          "description": "Shows message that a new module was created."
+        },
+        "rustModCreator.visibilityOptions": {
+          "type": "array",
+          "description": "Chose what visibility options show when creating a module.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "description": "The label for the visibility option."
+              },
+              "description": {
+                "type": "string",
+                "description": "The description shown in the picker."
+              }
+            },
+            "required": ["label", "description"]
+          },
+          "default": [
+            { "label": "pub", "description": "Visible to the entire crate" },
+            { "label": "pub(super)", "description": "Visible to the parent module" },
+            { "label": "pub(crate)", "description": "Visible only within the crate" },
+            { "label": "private", "description": "Visible only within this module" }
+          ]
         }
       }
     }
